@@ -158,7 +158,7 @@ def parse_config_in_context(merged_configs, branch_context, btb_context, prefetc
     # All caches have a default prefetcher and replacement policy
     for c in caches.values():
         c.setdefault('prefetcher', 'no_instr' if c.get('_is_instruction_cache') else 'no')
-        c.setdefault('replacement', 'lru')
+        c.setdefault('replacement', 'lfu')
 
     tlb_path = itertools.chain.from_iterable(util.iter_system(caches, cpu[name]) for cpu,name in itertools.product(cores, ('ITLB', 'DTLB')))
     l1d_path = itertools.chain.from_iterable(util.iter_system(caches, cpu[name]) for cpu,name in itertools.product(cores, ('L1I', 'L1D')))
