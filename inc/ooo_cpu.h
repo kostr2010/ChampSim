@@ -20,6 +20,7 @@
 #include <array>
 #include <bitset>
 #include <deque>
+#include <fstream>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -103,6 +104,9 @@ public:
   uint64_t num_retired = 0;
 
   bool show_heartbeat = true;
+
+  std::ofstream log_file{};
+  // std::ifstream log_file{};
 
   using stats_type = cpu_stats;
 

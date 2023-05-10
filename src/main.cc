@@ -50,6 +50,7 @@ int main(int argc, char** argv)
   int traces_encountered = 0;
   static struct option long_options[] = {{"warmup_instructions", required_argument, 0, 'w'},
                                          {"simulation_instructions", required_argument, 0, 'i'},
+                                         {"log_file", required_argument, 0, 'l'},
                                          {"hide_heartbeat", no_argument, 0, 'h'},
                                          {"cloudsuite", no_argument, 0, 'c'},
                                          {"json", optional_argument, 0, 'j'},
@@ -57,7 +58,7 @@ int main(int argc, char** argv)
                                          {0, 0, 0, 0}};
 
   int c;
-  while ((c = getopt_long_only(argc, argv, "w:i:hc", long_options, NULL)) != -1 && !traces_encountered) {
+  while ((c = getopt_long_only(argc, argv, ";:w:i:hc", long_options, NULL)) != -1 && !traces_encountered) {
     switch (c) {
     case 'w':
       warmup_instructions = atol(optarg);
@@ -71,6 +72,10 @@ int main(int argc, char** argv)
       break;
     case 'c':
       knob_cloudsuite = 1;
+      break;
+    case 'l':
+      for (O3_CPU& cpu : gen_environment.cpu_view())
+        cpu.log_file.open(optarg);
       break;
     case 'j':
       knob_json_out = true;
